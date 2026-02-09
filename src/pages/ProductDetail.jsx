@@ -59,8 +59,8 @@ export default function ProductDetail() {
   useEffect(() => {
     setLoading(true);
     Promise.all([
-      fetch(`https://shopco-ecommerce-6lk1.onrender.com/products/${id}`).then(res => res.json()),
-      fetch(`https://shopco-ecommerce-6lk1.onrender.com/reviews/product/${id}`).then(res => res.json())
+      fetch(`http://localhost:5000/products/${id}`).then(res => res.json()),
+      fetch(`http://localhost:5000/reviews/product/${id}`).then(res => res.json())
     ])
       .then(([productData, reviewsData]) => {
         setProduct(productData);

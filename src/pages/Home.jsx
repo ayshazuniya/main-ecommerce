@@ -23,9 +23,9 @@ export default function Home() {
   useEffect(() => {
     setLoading(true);
     Promise.all([
-      fetch("https://shopco-ecommerce-6lk1.onrender.com/products").then(res => res.json()),
-      fetch("https://shopco-ecommerce-6lk1.onrender.com/styles").then(res => res.json()),
-      fetch("https://shopco-ecommerce-6lk1.onrender.com/reviews/home").then(res => res.json())
+      fetch("http://localhost:5000/products").then(res => res.json()),
+      fetch("http://localhost:5000/styles").then(res => res.json()),
+      fetch("http://localhost:5000/reviews/home").then(res => res.json())
     ])
       .then(([productsData, stylesData, reviewsData]) => {
         setProducts(productsData);
