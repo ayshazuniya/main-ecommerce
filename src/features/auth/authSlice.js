@@ -23,6 +23,17 @@ export const register = createAsyncThunk("auth/register", async (userData, { rej
   }
 });
 
+export const logoutUser = createAsyncThunk("auth/logout", async (_, { dispatch }) => {
+  try {
+    await api.post("/auth/logout");
+  } catch (err) {
+    console.error("Logout error:", err);
+  } finally {
+    dispatch(logout());
+  }
+});
+
+
 const userFromStorage = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
 const tokenFromStorage = localStorage.getItem("token") || null;
 

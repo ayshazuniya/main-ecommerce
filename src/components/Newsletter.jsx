@@ -8,12 +8,8 @@ export default function Newsletter() {
           STAY UPTO DATE ABOUT <br />
           OUR LATEST OFFERS
         </h3>
-
         <div className="newsletter-form">
-          <input
-            type="email"
-            placeholder="Enter your email address"
-          />
+          <input type="email" placeholder="  Enter your email address" />
           <button>Subscribe to Newsletter</button>
         </div>
       </div>

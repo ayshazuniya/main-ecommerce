@@ -14,7 +14,7 @@ export default function SearchResults() {
     useEffect(() => {
         if (!query) return;
         setLoading(true);
-        fetch(`http://localhost:5000/products?search=${encodeURIComponent(query)}`)
+        fetch(`https://shopco-ecommerce-1-6ccc.onrender.com/products?search=${encodeURIComponent(query)}`)
             .then((res) => res.json())
             .then((data) => {
                 setProducts(data);

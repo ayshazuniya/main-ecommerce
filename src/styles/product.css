@@ -1,142 +1,105 @@
-/* Basic reset for product specific elements if needed */
+.products {
+  padding: 70px 40px;
+}
 
 .product-card {
   display: flex;
   flex-direction: column;
+  gap: 12px;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.2s;
-  width: 100%;
-  /* Ensure it fits the grid cell */
-  overflow: hidden;
-  /* Prevent spillover */
+  cursor: pointer;
 }
 
-.product-card:hover {
-  transform: translateY(-5px);
+.product-card:hover .product-image {
+  transform: scale(1.03);
 }
 
+/* IMAGE CONTAINER */
 .image-container {
   width: 100%;
- 
-  /* Roughly square/tall based on typical e-commerce */
-  background: #8f8f8f;
+  aspect-ratio: 1 / 1;
+  background: #F0EEED;
   border-radius: 20px;
   overflow: hidden;
-  position: relative;
-  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .product-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Cover usually better for consistent grid */
-  object-position: center;
-  transition: scale 0.3s ease;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
 }
 
-.product-card:hover .product-image {
-  scale: 1.05;
-}
-
+/* TITLE */
 .product-title {
-  font-family: 'Inter', sans-serif;
   font-size: 20px;
   font-weight: 700;
-  line-height: normal;
-  color: #000000;
-  margin: 0 0 8px 0;
-
-  /* Truncate text */
+  color: #111;
+  margin: 0;
+  line-height: 1.1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
-  /* Important for mobile */
 }
 
+/* RATING ROW */
 .product-rating {
   display: flex;
   align-items: center;
   gap: 13px;
-  margin-bottom: 8px;
-  flex-wrap: wrap;
-  /* Wrap on tiny screens */
+  height: 19px;
 }
 
 .stars {
   display: flex;
-  gap: 5px;
   align-items: center;
+  gap: 2px;
+}
+
+.star-icon {
+  width: 18px;
+  height: 18px;
+  color: #FFC633;
+  fill: #FFC633;
 }
 
 .rating-score {
   font-size: 14px;
-  font-weight: 400;
-  color: #000000;
+  font-weight: 500;
+  color: #666;
 }
 
+/* PRICE ROW */
 .product-price {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: 'Inter', sans-serif;
-  flex-wrap: wrap;
-  /* Handle long prices/badges */
+  height: 32px;
 }
 
 .current-price {
   font-size: 24px;
   font-weight: 700;
-  color: #000;
+  color: #111;
 }
 
 .old-price {
-  font-size: 24px;
-  /* Same size but strikethrough */
-  font-weight: 700;
-  color: rgba(0, 0, 0, 0.4);
-  /* Faded black/grey */
+  font-size: 20px;
+  font-weight: 400;
+  color: #999;
   text-decoration: line-through;
 }
 
 .discount-badge {
-  background: rgba(255, 51, 51, 0.1);
-  /* Light red background */
-  color: #FF3333;
-  /* Red text */
+  background: #FFDDE1;
+  color: #F33F58;
   font-size: 12px;
   font-weight: 500;
-  padding: 6px 14px;
-  border-radius: 62px;
-}
-
-/* Mobile responsive adjustments */
-@media (max-width: 768px) {
-  .product-title {
-    font-size: 16px;
-  }
-
-  .current-price,
-  .old-price {
-    font-size: 20px;
-  }
-
-  .discount-badge {
-    padding: 4px 10px;
-    /* Compact badge */
-    font-size: 10px;
-  }
-
-  .image-container {
-    border-radius: 13px;
-    /* Smaller radius on mobile usually */
-    margin-bottom: 10px;
-  }
-
-  /* Tweak gap in rating if needed */
-  .product-rating {
-    gap: 8px;
-  }
+  padding: 4px 10px;
+  border-radius: 20px;
 }

@@ -1,19 +1,18 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setSearchQuery } from "../features/products/productSlice";
-import { logout } from "../features/auth/authSlice";
-import { SearchIcon, CartIcon, UserIcon, MenuIcon, ChevronDown } from "./Icons";
+import { logoutUser } from "../features/auth/authSlice";
+import { SearchIcon, CartIcon, UserIcon, MenuIcon, LogOutIcon } from "./Icons";
 import "../styles/navbar.css";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+
   const navigate = useNavigate();
-  const location = useLocation();
   const dispatch = useDispatch();
 
-  const isCategoryPage = location.pathname.startsWith("/category/");
   const searchQuery = useSelector((state) => state.products.searchQuery);
   const user = useSelector((state) => state.auth.user);
 
@@ -21,66 +20,62 @@ export default function Navbar() {
     state.cart.items.reduce((acc, item) => acc + item.quantity, 0)
   );
 
-  // Clear search query when navigating away from category pages
-  useEffect(() => {
-    if (!isCategoryPage) {
-      dispatch(setSearchQuery(""));
-    }
-  }, [location.pathname, isCategoryPage, dispatch]);
-
   const handleSearchChange = (e) => {
     dispatch(setSearchQuery(e.target.value));
   };
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logoutUser());
     setShowProfileMenu(false);
     navigate("/");
   };
 
   return (
     <header className="nav">
-      <div className="nav-inner">
+      <div className="nav-container">
 
         {/* LEFT */}
         <div className="nav-left">
           <button className="menu-btn" onClick={() => setOpen(!open)}>
             <MenuIcon />
           </button>
-          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h2 className="logo">SHOP.CO</h2>
+
+          <Link to="/" className="logo">
+            SHOP.CO
           </Link>
+
+          <nav className="nav-links">
+            <Link to="/category/casual">Shop</Link>
+            <Link to="/category/top-selling">On Sale</Link>
+            <Link to="/category/new-arrivals">New Arrivals</Link>
+            <Link to="/">Brands</Link>
+          </nav>
         </div>
 
-        {/* DESKTOP LINKS */}
-        <nav className="nav-links">
-          <Link to="/category/casual" className="shop-link">
-            Shop <ChevronDown />
-          </Link>
-          <Link to="/category/top-selling">On Sale</Link>
-          <Link to="/category/new-arrivals">New Arrivals</Link>
-          <Link to="/">Brands</Link>
-        </nav>
+        {/* SEARCH (ALWAYS VISIBLE) */}
+        {/* SEARCH */}
+<div className="search-bar">
+  <SearchIcon />
+  <input
+    type="text"
+    placeholder="Search for products..."
+    value={searchQuery}
+    onChange={handleSearchChange}
+  />
+</div>
 
         {/* RIGHT */}
         <div className="nav-right">
-          {isCategoryPage && (
-            <div className="search-bar">
-              <SearchIcon />
-              <input
-                placeholder="Search products in this category..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
-            </div>
-          )}
-          {user && (
-            <Link to="/cart" className="nav-icon-link">
-              <CartIcon />
-              {cartItemsCount > 0 && <span className="cart-badge">{cartItemsCount}</span>}
-            </Link>
-          )}
 
+          {/* CART (ALWAYS SHOW) */}
+          <Link to="/cart" className="nav-icon-link">
+            <CartIcon />
+            {cartItemsCount > 0 && (
+              <span className="cart-badge">{cartItemsCount}</span>
+            )}
+          </Link>
+
+          {/* USER */}
           {user ? (
             <div className="profile-container">
               <div
@@ -88,19 +83,24 @@ export default function Navbar() {
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
               >
                 {user.profileImage ? (
-                  <img src={user.profileImage} alt={user.name} className="profile-img" />
+                  <img src={user.profileImage} alt="user" className="profile-img" />
                 ) : (
-                  <div className="profile-initials">{user.name.charAt(0)}</div>
+                  <div className="profile-initials">
+                    {user.name?.charAt(0)}
+                  </div>
                 )}
               </div>
 
               {showProfileMenu && (
                 <div className="profile-menu">
-                  <p className="menu-name">{user.name}</p>
-                  <p className="menu-email">{user.email}</p>
+                  <p>{user.name}</p>
+                  <p>{user.email}</p>
                   <hr />
-                  <Link to="/orders" onClick={() => setShowProfileMenu(false)}>My Orders</Link>
-                  <span onClick={handleLogout} className="logout-btn">Logout</span>
+                  <Link to="/orders">My Orders</Link>
+                  <span onClick={handleLogout} className="logout-link">
+                    <LogOutIcon /> Logout
+                  </span>
+
                 </div>
               )}
             </div>
@@ -115,21 +115,10 @@ export default function Navbar() {
       {/* MOBILE MENU */}
       {open && (
         <div className="mobile-menu">
-          {isCategoryPage && (
-            <div className="mobile-search">
-              <SearchIcon />
-              <input
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
-            </div>
-          )}
-          <Link to="/category/casual" onClick={() => setOpen(false)}>Shop</Link>
-          <Link to="/category/top-selling" onClick={() => setOpen(false)}>On Sale</Link>
-          <Link to="/category/new-arrivals" onClick={() => setOpen(false)}>New Arrivals</Link>
-          <Link to="/" onClick={() => setOpen(false)}>Brands</Link>
-          {!user && <Link to="/auth" onClick={() => setOpen(false)}>Login / Sign Up</Link>}
+          <Link to="/category/casual">Shop</Link>
+          <Link to="/category/top-selling">On Sale</Link>
+          <Link to="/category/new-arrivals">New Arrivals</Link>
+          <Link to="/">Brands</Link>
         </div>
       )}
     </header>
