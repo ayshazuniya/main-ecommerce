@@ -6,6 +6,11 @@ import { Skeleton } from "../components/Skeleton";
 import API from "../api/api";
 import "../styles/category.css";
 
+
+
+
+
+
 // ─── Constants ───────────────────────────────────────────────
 const CATEGORY_MAP = {
   casual: "Casual",
