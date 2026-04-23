@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from .views import create_admin
+
 
 urlpatterns = [
     path('auth/register/', views.register_user),
@@ -13,4 +15,7 @@ urlpatterns = [
     path('products/', views.get_products),
 
     path('products/<int:id>/', views.get_product),
-]
+
+    path('create-admin/', create_admin),
+
+]
