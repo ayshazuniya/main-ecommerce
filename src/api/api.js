@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://127.0.0.1:8000/api"
+  baseURL: "https://main-ecommerce-mf9q.onrender.com/api"
 });
 
 API.interceptors.request.use((req) => {
@@ -12,4 +12,4 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export default API;
+export default API;
